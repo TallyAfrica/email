@@ -8,21 +8,29 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Very permissive CORS for development (allows localhost:* and 127.0.0.1:*)
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       if (
+//         !origin ||
+//         origin.startsWith("http://localhost:") ||
+//         origin.startsWith("http://127.0.0.1:")
+//       ) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     methods: ["GET", "POST", "OPTIONS"],
+//     allowedHeaders: ["Content-Type"],
+//   })
+// );
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (
-        !origin ||
-        origin.startsWith("http://localhost:") ||
-        origin.startsWith("http://127.0.0.1:")
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -133,3 +141,4 @@ app.post("/api/send-otp", async (req, res) => {
 app.listen(port, () => {
   console.log(`Backend running on http://localhost:${port}`);
 });
+
